@@ -38,6 +38,17 @@ systemctl enable sddm
 systemctl set-default graphical.target
 clear
 
+printf "Instalace Témat\n"
+printf "===============\n\n"
+
+git clone https://github.com/Adapta-Projects/Adapta-Nord
+/home/$SUDO_USER/Install.sh
+
+git clone https://github.com/robertovernina/NordArc
+cp -r /home/$SUDO_USER/NordArc/NordArc-Theme /usr/share/themes/
+cp -r /home/$SUDO_USER/NordArc/NordArc-Icons /usr/share/icons/
+sleep 10
+
 clear
 printf "Kopíruji Konfigurační soubory\n"
 printf "=============================\n\n"
@@ -49,6 +60,11 @@ clear
 sleep 5
 gsettings set org.cinnamon.desktop.default-applications.terminal exec alacritty
 gsettings set org.gtk.Settings.FileChooser sort-directories-first true
+clear
+printf "Nastavuji adresáře pro uživatele\n"
+printf "================================\n\n"
+su $USER -c "xdg-user-dirs-update"
+sleep 10
 # Hotovo
 sleep 10
 clear
