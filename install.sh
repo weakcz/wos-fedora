@@ -10,7 +10,10 @@ clear
 printf "Instalační skript pro weakOS\n"
 printf "============================\n\n"
 printf "Tento skript nainstaluje programy a nastavení tak jak je mám rád\n\n"
-sleep 2
+this_dir=$(pwd)
+echo "Pracovní adresář: "$this_dir
+
+sleep 5
 
 echo "max_parallel_downloads=10" | tee -a /etc/dnf/dnf.conf
 echo "fastestmirror=True" | tee -a /etc/dnf/dnf.conf
@@ -41,12 +44,21 @@ clear
 printf "Instalace Témat\n"
 printf "===============\n\n"
 
+printf "Stahuji Témata\n"
+printf "--------------\n\n"
 git clone https://github.com/Adapta-Projects/Adapta-Nord
-/home/$SUDO_USER/Install.sh
-
 git clone https://github.com/robertovernina/NordArc
-cp -r /home/$SUDO_USER/NordArc/NordArc-Theme /usr/share/themes/
-cp -r /home/$SUDO_USER/NordArc/NordArc-Icons /usr/share/icons/
+
+clear
+printf "Instalace Témat\n"
+printf "===============\n\n"
+printf "Instaluji Témata\n"
+printf "----------------\n\n"
+
+$this_dir/Adapta-Nord/Install.sh
+
+cp -r $this_dir/NordArc/NordArc-Theme /usr/share/themes/
+cp -r $this_dir/NordArc/NordArc-Icons /usr/share/icons/
 sleep 10
 
 clear
@@ -63,7 +75,7 @@ gsettings set org.gtk.Settings.FileChooser sort-directories-first true
 clear
 printf "Nastavuji adresáře pro uživatele\n"
 printf "================================\n\n"
-su $USER -c "xdg-user-dirs-update"
+su $SUDO_USER -c "xdg-user-dirs-update"
 sleep 10
 # Hotovo
 sleep 10
