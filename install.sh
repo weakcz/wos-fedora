@@ -11,11 +11,6 @@ printf "Instalační skript pro weakOS\n"
 printf "============================\n\n"
 printf "Tento skript nainstaluje programy a nastavení tak jak je mám rád\n\n"
 this_dir=$(pwd)
-echo "Pracovní adresář: "$this_dir"\n\n"
-echo "uživatel: "$SUDO_USER
-
-sleep 5
-
 echo "max_parallel_downloads=10" | tee -a /etc/dnf/dnf.conf
 echo "fastestmirror=True" | tee -a /etc/dnf/dnf.conf
 echo "QT_QPA_PLATFORMTHEME=qt5ct" | sudo tee -a /etc/environment
@@ -45,40 +40,44 @@ clear
 printf "Instalace Témat\n"
 printf "===============\n\n"
 printf "Stahuji Témata\n"
-printf "--------------\n\n"
+printf "**************\n\n"
 
 git clone https://github.com/Adapta-Projects/Adapta-Nord
 git clone https://github.com/robertovernina/NordArc
-
+git clone https://github.com/alvatip/Nordzy-cursors
 clear
 printf "Instalace Témat\n"
 printf "===============\n\n"
 printf "Instaluji Témata\n"
-printf "----------------\n\n"
+printf "****************\n\n"
 
 cp -r $this_dir/Adapta-Nord/Pkg/usr/share/themes/Adapta* /usr/share/themes/
 cp -r $this_dir/NordArc/NordArc-Theme /usr/share/themes/
 cp -r $this_dir/NordArc/NordArc-Icons /usr/share/icons/
+cp -r $this_dir/Nordzy-cursors/Nordzy-* /usr/share/icons/
+
+# TEST
+ls -l /usr/share/icons/
 sleep 10
 
 clear
 printf "Kopíruji Konfigurační soubory\n"
 printf "=============================\n\n"
-sleep 5
 
 cp -r dotfiles/. /home/$SUDO_USER/
 chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/
 clear
-sleep 5
+
 gsettings set org.cinnamon.desktop.default-applications.terminal exec alacritty
 gsettings set org.gtk.Settings.FileChooser sort-directories-first true
 clear
-printf "Nastavuji adresáře pro uživatele\n"
-printf "================================\n\n"
-su -c "xdg-user-dirs-update" -m $SUDO_USER
-printf "Hotovo\n\n"
-ls -l /home/$SUDO_USER/
-sleep 10
+
+# Jelikož weakOS používá X11 tak odstarníme odkaz na spuštění qtile na waylandu
+rm /usr/share/wayland-sessions/qtile-wayland.desktop
+
+# Nastavíme adresáře pro uživatele
+sudo -u $SUDO_USER -H sh -c "xdg-user-dirs-update"
+
 # Hotovo
 sleep 10
 clear
