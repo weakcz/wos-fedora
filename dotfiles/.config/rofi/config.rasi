@@ -1,0 +1,18 @@
+configuration{
+    modi: "run,drun,window";
+    icon-theme: "Oranchelo";
+    show-icons: true;
+    terminal: "alacritty";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "   Aplikace ";
+    display-run: "   Spustit ";
+    display-window: " 﩯  Okna";
+    display-Network: " 󰤨  Síť";
+    sidebar-mode: true;
+}
+
+@theme "nord"
+
